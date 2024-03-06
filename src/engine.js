@@ -44,7 +44,7 @@ class GameObject {
         this.width = width;
         this.height= height;
         this.color = color;
-        
+
         if (imgSrc) {
             this.image = new Image ()
             this.image.src = imgSrc
@@ -176,6 +176,10 @@ for (let i=0; i < 2048; i++) {
 objList.sort ((a,b) => {
     return b.pos.z - a.pos.z;
 })
+
+let items = 0
+
+
 function renderer () {
     requestAnimationFrame (renderer);
     ctx.clearRect (0, 0, canvas.width, canvas.height);
@@ -227,19 +231,20 @@ function renderer () {
         }
         drawQuad (grass, 0, p.Y, canvas.width, 0, l.Y, canvas.width);
         drawQuad (road, p.X, p.Y+1, p.W, l.X, l.Y, l.W);
-   
-   
+
+
     }
+        items = 0
     objList.forEach (obj => {
-        if (obj.pos.z > cam.Z) {
+        if (obj.pos.z > cam.Z && obj.pos.z <= (startPos + dist) * segL) {
             obj.project (cam)
             obj.draw (ctx)
+            items++
         }
     })
-    //HUD ();
+    HUD ();
 
 }
-
 let faixa = 25
 
 renderer ();
@@ -247,7 +252,5 @@ renderer ();
 function HUD () {
     ctx.fillStyle = "#333";
     ctx.font = '20px Monospace'
-    ctx.fillText (`lap: ${lap}`,30,30);
-    ctx.fillText (`${startPos}`,30,50);
-    // ctx.fillText (`[x: ${parseInt (cam.X)} | y: ${parseInt (cam.Y)} | z: ${parseInt (cam.Z/segL)} ]`,30,50);
+    ctx.fillText (`itens: ${items}`, 40, 40)
 }
