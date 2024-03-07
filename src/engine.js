@@ -8,7 +8,8 @@ ctx.imageSmoothingEnabled = false
 
 const roadW = 2048*2;
 let segL  = 256;
-let camD  = 0.84;
+let camD  = 0.5;
+// let camD  = 0.84;
 
 let cam = {
     X: 0,
@@ -107,7 +108,7 @@ input.handler = function () {
     }
 
     if (input.key.UP) {
-        if (playerY <= 4096) playerY+=64;
+        if (playerY <= 4096*2) playerY+=64;
     } else if (input.key.DOWN) {
         if (playerY >= 768) playerY-=64;
     }
@@ -144,7 +145,7 @@ for (let i=0; i < N; i++) {
         pos : {
             x: (i % 2) ? -roadW * 1.5 : roadW * 1.25 ,
             y: 2048*1.5,
-            z: i * 2.5 * segL
+            z: i  * segL
         },
         width : 240,
         height: 440,
@@ -166,14 +167,17 @@ paredeList.sort ((a,b) => {
 
 let items = 0
 
-let img = new Image ()
-img.src = 'res/cockpit.png'
+let cockpit = new Image ()
+cockpit.src = 'res/cockpit.png'
+
+let mira = new Image ()
+mira.src = 'res/mira.png'
 
 function renderer () {
     requestAnimationFrame (renderer);
     // ctx.clearRect (0, 0, canvas.width, canvas.height);
     const grd = ctx.createLinearGradient(0,0,0,canvas.width);
-    grd.addColorStop(0,"#87f");
+    grd.addColorStop(0,"#43a");
     grd.addColorStop(0.5,"#aff");
     ctx.fillStyle = grd
     ctx.fillRect (0, 0, canvas.width, canvas.height);
@@ -233,7 +237,8 @@ function renderer () {
         }
     })
 
-    ctx.drawImage (img, 0, 0, canvas.width, img.height *1.75 )
+    ctx.drawImage (cockpit, 0, 0, canvas.width, cockpit.height *1.75 )
+    ctx.drawImage (mira, canvas.width/2 - mira.width/2, canvas.height/2 - mira.height/2, mira.width, mira.height)
 
     HUD ();
 
