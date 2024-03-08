@@ -45,7 +45,7 @@ let range = 8192
 
 const objetos = []
 
-for (let i=0; i < N; i++) {
+for (let i=0; i < N; i+=4) {
     let nuvem = new Object3D ({
         pos : {
             x: Math.round (Math.random () * range*8 - range*4),
@@ -61,13 +61,13 @@ for (let i=0; i < N; i++) {
     objetos.push (nuvem)
 }
 
-for (let i=0; i < N; i++) {
+for (let i=0; i < N; i+=4) {
     let parede = new Object3D ({
         pos : {
             // x: (i % 2) ? -scene.roadW * 1.5 : scene.roadW * 1.25 ,
             x: Math.round (Math.random () * range*8 - range*4),
             y: 2048*1.5,
-            z: i * 2 * scene.segL
+            z: i * scene.segL
         },
         width : 240,
         height: 440,
