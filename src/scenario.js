@@ -33,16 +33,10 @@ class Scenario {
         while (this.pos >= N * this.segL/2) this.pos -= N * this.segL/2;
         while (this.pos < 0) this.pos +=  N * this.segL/2;
 
-
         this.pos += 128
-
-        // console.log (this.pos, N * this.segL)
 
         let current = parseInt (this.pos/this.segL)
         let startPos = (current > N ) ? 0: current ;
-
-
-        // console.log (startPos, current, N)
 
         for (let n=startPos; n < startPos + dist; n++) {
             let l = this.lines [n%N];
@@ -66,9 +60,9 @@ class Scenario {
                 bottomLimit = currentBottom;
                 continue;
             }
+            
             this.drawQuad (ctx, grass, 0, p.Y, canvas.width, 0, l.Y, canvas.width);
             this.drawQuad (ctx, road, p.X, p.Y+1, p.W, l.X, l.Y, l.W);
-
         }
 
         return startPos;

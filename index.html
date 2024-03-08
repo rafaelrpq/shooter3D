@@ -1,12 +1,26 @@
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#666">
+        <meta charset="utf-8">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+
+        <meta name="Description" content="
+            Desenvolvido por: Rafael Prates Quevedo
+            Data: 2024-03-06
+        ">
+
+        <link rel="manifest" href="manifest.json">
+        <link rel="icon" href="res/icons/128.png">
+        <link rel="apple-touch-icon" href="res/icons/192.png">
         <title></title>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
+            @import 'css/style.css';
+            /*
             canvas {
                 border: 1px solid;
                 border: 1px solid #fff;
@@ -14,7 +28,7 @@
                 /*
                 background: linear-gradient(#87f,#aff);
                 width: 75%;
-                */
+
             }
 
             body {
@@ -25,7 +39,10 @@
                 justify-content: center;
                 height: 100vh;
             }
+            */
+
         </style>
+        <script src="src/app/appManager.js" defer></script>
         <script src="src/input.js" defer></script>
         <script src="src/eventListeners.js" defer></script>
         <script src="src/scenario.js" defer></script>
@@ -34,5 +51,20 @@
     </head>
     <body>
         <canvas></canvas>
+        <div id="controles">
+            <div class="circle direcional">
+                <span></span> <button data-value="ArrowUp">△</button> <span></span>
+                <button data-value="ArrowLeft">◁</button> <span></span> <button data-value="ArrowRight">▷</button>
+                <span></span><button data-value="ArrowDown">▽</button><span></span>
+            </div>
+            <div class="start">
+               <button data-value="Enter">ENTER</button>
+            </div>
+            <div class="circle triggers">
+                <span></span> <button data-value="d">D</button> <span></span>
+                <button data-value="s">S</button> <span></span> <button data-value="c">C</button>
+                <span></span> <button data-value="x">X</button> <span></span>
+            </div>
+        </div>
     </body>
 </html>
