@@ -1,4 +1,4 @@
-var DYNAMIC_CACHE = 'v20240308-1155';
+var DYNAMIC_CACHE = 'v20240308-1210';
 
 var urlsToCache = [
     '',
@@ -11,6 +11,10 @@ var urlsToCache = [
     'src/object3D.js',
     'src/scenario.js',
     'src/app/appManager.js',
+    'res/cockpit.png',
+    'res/mira.png',
+    'res/nuvem.png',
+    'res/pedra2.png',
 ];
 
 self.addEventListener ('install', function (event) {
