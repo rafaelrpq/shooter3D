@@ -44,6 +44,7 @@ let dist = 256
 let range = 8192
 
 const objetos = []
+
 for (let i=0; i < N; i++) {
     let nuvem = new Object3D ({
         pos : {
@@ -51,7 +52,7 @@ for (let i=0; i < N; i++) {
             y: Math.round (Math.random () * range*4),
             z: Math.round (Math.random () * N * scene.segL)
         },
-        width : 64,
+        width : Math.random () * 512 + 64,
         height: 64,
         color : 'rgba(255,255,255,0.5)',
         imgSrc: 'res/nuvem.png'
@@ -127,7 +128,7 @@ renderer ();
 function HUD () {
     ctx.fillStyle = "#3a3";
     ctx.font = '20px VT323'
-    ctx.fillText (`itens: ${items}`, 100, 530)
+    ctx.fillText (`objetos: ${items}`, 100, 530)
     ctx.fillText (`altura: ${player.Y}px`, 100, 560)
     // ctx.fillText (`itens: ${items}`, 100, 400)
 }
