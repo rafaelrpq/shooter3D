@@ -1,8 +1,8 @@
-var DYNAMIC_CACHE = 'v20240308-1215';
+var DYNAMIC_CACHE = 'v20240308-1220';
 
 var urlsToCache = [
     'index.html',
-    'css/index.css',
+    'css/style.css',
     'css/snackbar.css',
     'src/engine.js',
     'src/eventListeners.js',
