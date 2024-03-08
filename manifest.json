@@ -1,6 +1,6 @@
 {
     "name": "Shooter 3D",
-    "short_name": "Game",
+    "short_name": "Shooter 3D",
     "icons": [{
         "src": "./res/icons/128.png",
         "sizes": "128x128",
