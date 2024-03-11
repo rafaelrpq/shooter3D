@@ -5,8 +5,10 @@ const input = {
         LEFT: false,
         RIGHT: false,
 
-        PAGE_UP: false,
-        PAGE_DW: false,
+        BTN_X: false,
+        BTN_C: false,
+        BTN_S: false,
+        BTN_D: false,
     },
 
     kbListener : (e) => {

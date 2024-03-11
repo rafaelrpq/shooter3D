@@ -1,6 +1,6 @@
 class Scenario {
     constructor () {
-        this.roadW = 2048*2;
+        this.width = 8192*2;
         this.segL  = 256;
         this.pos = 0
 
@@ -10,7 +10,7 @@ class Scenario {
             X: 0,
             Y: 0,
             Z: 0,
-            D: 0.5,
+            D: 0.84,
         }
     }
 
@@ -26,41 +26,45 @@ class Scenario {
     }
 
     update (dist, player, ctx, canvas) {
-        let bottomLimit = canvas.height
-        let currentBottom;
+        // let currentBottom;
         let N = this.lines.length;
+        let bottomLimit = canvas.height
 
-        while (this.pos >= N * this.segL/2) this.pos -= N * this.segL/2;
-        while (this.pos < 0) this.pos +=  N * this.segL/2;
+        this.pos += player.vel
 
-        this.pos += 128
+        while (this.pos >= N * this.segL) this.pos -= N * this.segL;
+        while (this.pos <= 0) this.pos +=  N * this.segL;
 
-        let current = parseInt (this.pos/this.segL)
-        let startPos = (current > N ) ? 0: current ;
 
-        for (let n=startPos; n < startPos + dist; n++) {
+
+        let startPos = parseInt (this.pos/this.segL) % N;
+
+        for (let n=startPos; n < startPos+dist; n++) {
+
+
             let l = this.lines [n%N];
 
             this.cam = {
                 X: parseInt (player.X),
-                Y: parseInt ( player.Y + this.lines[startPos].y),
-                Z: parseInt (this.pos - (n >= N ? N*this.segL : 0)),
+                Y: parseInt (player.Y),
+                // Z: parseInt ((startPos) * this.segL - (offset)),
+                Z: parseInt ((startPos) *this.segL - (n >= N ? N*this.segL : 0)),
                 D: this.cam.D
             }
 
-            l.project (this.cam, this.roadW)
+            l.project (this.cam, this.width)
 
             let grass = (n)%2 ? '#696' : '#8b8';
             let road = (n)%2 ? '#666' : '#707070';
 
             let p = this.lines [Math.abs (n-1) % N];
 
-            currentBottom = p.Y;
-            if ((currentBottom < bottomLimit || p.Y < 0 || l.scale < 0) && this.cam.Y > 0) {
+            let currentBottom = p.Y;
+            if (currentBottom > bottomLimit || p.Y < 0 || l.scale < 0) {
                 bottomLimit = currentBottom;
                 continue;
             }
-            
+
             this.drawQuad (ctx, grass, 0, p.Y, canvas.width, 0, l.Y, canvas.width);
             this.drawQuad (ctx, road, p.X, p.Y+1, p.W, l.X, l.Y, l.W);
         }
@@ -79,11 +83,11 @@ class Line {
         this.curve = 0;
     }
 
-    project (cam, roadW) {
+    project (cam, width) {
         this.scale = cam.D/(this.z - cam.Z);
-        this.X = (1 + this.scale * (this.x - cam.X)) * canvas.width/2;
-        this.Y = (1 - this.scale * (this.y - cam.Y)) * canvas.height/2;
-        this.W = this.scale * roadW * canvas.width/2;
+        this.X = (1 + this.scale * (- cam.X)) * canvas.width/2;
+        this.Y = (1 - this.scale * (- cam.Y)) * canvas.height/2;
+        this.W = this.scale * width * canvas.width/2;
     }
 }
 

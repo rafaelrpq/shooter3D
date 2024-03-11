@@ -9,7 +9,7 @@ ctx.imageSmoothingEnabled = false
 // function
 const scene = new Scenario
 
-for (let i=0; i < 2048; i++) {
+for (let i=0; i < 4096; i++) {
     let line = new Line ();
     line.z = i * scene.segL;
     scene.lines.push (line);
@@ -20,49 +20,57 @@ let pos = 1;
 
 let player= {
     X : 0,
-    Y : 1536,
+    Y : 4096,
+    vel:256,
 }
 
 input.handler = function () {
-
     if (input.key.RIGHT) {
-        if (player.X <= 2048*2) player.X+=64;
+        if (player.X < scene.width) player.X+=player.vel;
     } else if (input.key.LEFT) {
-        if (player.X >=  -2048*2) player.X-=64;
+        if (player.X >  -scene.width) player.X-=player.vel;
     }
 
     if (input.key.UP) {
-        if (player.Y <= 4096*2) player.Y+=64;
+        if (player.Y < 8192*2) player.Y+=player.vel;
     } else if (input.key.DOWN) {
-        if (player.Y >= 768) player.Y-=64;
+        if (player.Y > 2048) player.Y-=player.vel;
+    }
+
+    if (input.key.BTN_S) {
+        player.vel = 640
+    } else if (input.key.BTN_X) {
+        player.vel = 128
+    } else {
+        player.vel = 256
     }
 }
 
 let lap = 0;
-let dist = 256
+let dist = 512
 
 let range = 8192
 
 const objetos = []
 
-for (let i=0; i < N; i+=4) {
-    let nuvem = new Object3D ({
-        pos : {
-            x: Math.round (Math.random () * range*8 - range*4),
-            y: Math.round (Math.random () * range*4),
-            z: Math.round (Math.random () * N * scene.segL)
-        },
-        width : Math.random () * 512 + 64,
-        height: 64,
-        color : 'rgba(255,255,255,0.5)',
-        imgSrc: 'res/nuvem.png'
-    })
+// for (let i=0; i < N; i+=4) {
+//     let nuvem = new Object3D ({
+//         pos : {
+//             x: Math.round (Math.random () * range*8 - range*4),
+//             y: Math.round (Math.random () * range*4),
+//             z: Math.round (Math.random () * i * scene.segL)
+//         },
+//         width : Math.random () * 768 + 64,
+//         height: Math.random () * 128 + 64,
+//         color : 'rgba(255,255,255,0.5)',
+//         imgSrc: 'res/nuvem.png'
+//     })
 
-    objetos.push (nuvem)
-}
+//     objetos.push (nuvem)
+// }
 
 for (let i=0; i < N; i+=4) {
-    let parede = new Object3D ({
+    let pedra = new Object3D ({
         pos : {
             // x: (i % 2) ? -scene.roadW * 1.5 : scene.roadW * 1.25 ,
             x: Math.round (Math.random () * range*8 - range*4),
@@ -75,7 +83,7 @@ for (let i=0; i < N; i+=4) {
         imgSrc: 'res/pedra2.png'
     })
 
-    objetos.push (parede)
+    objetos.push (pedra)
 }
 
 objetos.sort ((a,b) => {
@@ -107,7 +115,6 @@ function renderer () {
 
     items = 0
 
-
     objetos.forEach (obj => {
         if (obj.pos.z > scene.cam.Z && obj.pos.z <= (startPos + dist) * scene.segL) {
             obj.project (scene.cam)
@@ -128,7 +135,15 @@ renderer ();
 function HUD () {
     ctx.fillStyle = "#3a3";
     ctx.font = '20px VT323'
-    ctx.fillText (`objetos: ${items}`, 100, 530)
-    ctx.fillText (`altura: ${player.Y}px`, 100, 560)
-    // ctx.fillText (`itens: ${items}`, 100, 400)
+    // ctx.fillText (`objetos: ${items}`, 100, 530)
+    // ctx.fillText (`pos: ${scene.pos/scene.segL}`, 100, 560)
+    ctx.fillText (`Movimentação`, 100, 530)
+    ctx.fillText (`Setas direcionais`, 100, 560)
+
+    // ctx.fillText (`X: ${player.X}px`, 730, 530)
+    // ctx.fillText (`Y: ${player.Y}px`, 730, 560)
+    ctx.fillText (`S: acelerar`, 730, 530)
+    ctx.fillText (`X: frear`, 730, 560)
+
+
 }
