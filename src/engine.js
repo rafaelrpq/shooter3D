@@ -115,13 +115,13 @@ function renderer () {
 
     items = 0
 
-    objetos.forEach (obj => {
-        if (obj.pos.z > scene.cam.Z && obj.pos.z <= (startPos + dist) * scene.segL) {
-            obj.project (scene.cam)
-            obj.draw (ctx)
-            items++
-        }
-    })
+    // objetos.forEach (obj => {
+    //     if (obj.pos.z > scene.cam.Z && obj.pos.z <= (startPos + dist) * scene.segL) {
+    //         obj.project (scene.cam)
+    //         obj.draw (ctx)
+    //         items++
+    //     }
+    // })
 
     ctx.drawImage (cockpit, 0, 0, canvas.width, cockpit.height *1.75 )
     ctx.drawImage (mira, canvas.width/2 - mira.width/2, canvas.height/2 - mira.height/2, mira.width, mira.height)
