@@ -1,7 +1,7 @@
 class Scenario {
     constructor () {
         this.width = 8192*2;
-        this.segL  = 256;
+        this.segL  = 1024;
         this.pos = 0
 
         this.lines = [];
@@ -10,7 +10,7 @@ class Scenario {
             X: 0,
             Y: 0,
             Z: 0,
-            D: 0.84,
+            D: .85,
         }
     }
 
@@ -47,8 +47,8 @@ class Scenario {
             this.cam = {
                 X: parseInt (player.X),
                 Y: parseInt (player.Y),
-                // Z: parseInt ((startPos) * this.segL - (offset)),
-                Z: parseInt ((startPos) *this.segL - (n >= N ? N*this.segL : 0)),
+                // Z: parseInt ((startPos) *this.segL - (n >= N ? N*this.segL : 0)),
+                Z: parseInt (this.pos - (n >= N ? N*this.segL : 0)),
                 D: this.cam.D
             }
 
@@ -69,6 +69,34 @@ class Scenario {
             this.drawQuad (ctx, road, p.X, p.Y+1, p.W, l.X, l.Y, l.W);
         }
 
+            for (let n=startPos+dist; n> startPos; n--) {
+                this.cam = {
+                    X: parseInt (player.X),
+                    Y: parseInt (player.Y),
+                    // Z: parseInt ((startPos) *this.segL - (n >= N ? N*this.segL : 0)),
+                    Z: parseInt (this.pos - (n >= N ? N*this.segL : 0)),
+                    D: this.cam.D
+                }
+
+
+                if (this.lines[n%N].sprite) {
+                    let bottomLimit = canvas.height
+                    let currentBottom = this.lines[n%N].Y;
+
+                    if (currentBottom > bottomLimit || this.lines[(n-1)%N].Y < 0 || this.lines[n%N].scale < 0) {
+                        bottomLimit = currentBottom;
+                        continue;
+                    }
+
+                    // this.lines[n%N].sprite.project (this.cam)
+                    // this.lines[n%N].sprite.draw (ctx)
+
+                    this.lines[n%N].sprite.forEach (sprite => {
+                        sprite.project (this.cam)
+                        sprite.draw (ctx)
+                    })
+                }
+            }
         return startPos;
     }
 }
@@ -81,6 +109,8 @@ class Line {
 
         this.scale = 0;
         this.curve = 0;
+
+        this.sprite = []
     }
 
     project (cam, width) {

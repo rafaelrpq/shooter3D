@@ -6,12 +6,44 @@ canvas.height = 576;
 
 ctx.imageSmoothingEnabled = false
 
-// function
+let range = 8192
+
 const scene = new Scenario
 
-for (let i=0; i < 4096; i++) {
+for (let i=0; i < 1024; i++) {
     let line = new Line ();
     line.z = i * scene.segL;
+
+
+    if (i % 16 === 0) {
+        let pedra = new Object3D ({
+            pos : {
+                // x: (i % 2) ? -scene.roadW * 1.5 : scene.roadW * 1.25 ,
+                x: Math.round (Math.random () * range*8 - range*4),
+                y: 2048*1.5,
+                z: i * scene.segL
+            },
+            width : 240,
+            height: 440,
+            // color : 'rgba(255,255,255,0.5)',
+            imgSrc: 'res/pedra2.png'
+        })
+
+        let nuvem = new Object3D ({
+            pos : {
+                x: Math.round (Math.random () * range*8 - range*4),
+                y: Math.round (Math.random () * range*4 + 8192),
+                z: i * scene.segL
+            },
+            width : Math.random () * 768 + 64,
+            height: Math.random () * 128 + 64,
+            color : 'rgba(255,255,255,0.5)',
+            imgSrc: 'res/nuvem.png'
+        })
+
+        line.sprite.push (pedra)
+        line.sprite.push (nuvem)
+    }
     scene.lines.push (line);
 }
 
@@ -21,7 +53,7 @@ let pos = 1;
 let player= {
     X : 0,
     Y : 4096,
-    vel:256,
+    vel: 256,
 }
 
 input.handler = function () {
@@ -49,7 +81,6 @@ input.handler = function () {
 let lap = 0;
 let dist = 512
 
-let range = 8192
 
 const objetos = []
 
@@ -125,6 +156,8 @@ function renderer () {
 
     ctx.drawImage (cockpit, 0, 0, canvas.width, cockpit.height *1.75 )
     ctx.drawImage (mira, canvas.width/2 - mira.width/2, canvas.height/2 - mira.height/2, mira.width, mira.height)
+
+
 
     HUD ();
 
