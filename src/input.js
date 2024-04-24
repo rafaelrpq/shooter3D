@@ -109,7 +109,7 @@ document.addEventListener ('keyup', input.listener, {passive: false});
 document.addEventListener ('touchstart', input.listener, {passive: false});
 document.addEventListener ('touchend', input.listener, {passive: false});
 
-document.querySelector ('[key=Enter]').ontouchstart = (e) => {
+document.querySelector ('[key=Enter]').addEventListener ('touchstart', (e) => {
     pause ()
 }, {'passive' : true});
 

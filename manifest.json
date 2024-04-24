@@ -34,5 +34,6 @@
     ],
     "categories": [
         "utilities"
-    ]
+    ],
+    "form_factor" : "wide",
 }
