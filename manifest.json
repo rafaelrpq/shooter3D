@@ -37,11 +37,17 @@
     ],
     "screenshots": [
        {
-
-         "src": "res/preview.png",
+          "src": "res/preview.png",
           "sizes": "1024x576",
           "type": "image/png",
           "form_factor": "wide",
+          "label": "Application"
+        },
+       {
+          "src": "res/previewSD.png",
+          "sizes": "559x419",
+          "type": "image/png",
+          "form_factor": "narrow",
           "label": "Application"
         }
      ]
