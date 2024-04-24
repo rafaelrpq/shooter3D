@@ -1,7 +1,9 @@
-var DYNAMIC_CACHE = 'v20240424-1';
+var DYNAMIC_CACHE = 'v20240424';
 
 var urlsToCache = [
     'index.html',
+
+    'manifest.json',
 
     'css/style.css',
     'css/snackbar.css',
