@@ -25,7 +25,7 @@ const input = {
         input.parser (e.key, state);
         input.parser (e.target.getAttribute('key'), state);
     },
-    
+
     parser : (handler, state) => {
         switch (handler) {
             case 'ArrowUp' :
@@ -111,8 +111,8 @@ document.addEventListener ('touchend', input.listener, {passive: false});
 
 document.querySelector ('[key=Enter]').ontouchstart = (e) => {
     pause ()
-}
+}, {'passive' : false});
 
 document.addEventListener ('keydown', e => {
     if (e.key === 'Enter') pause ();
-});
+}, {'passive' : false});
