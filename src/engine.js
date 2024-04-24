@@ -1,182 +1,238 @@
 const canvas = document.querySelector ('canvas');
 const ctx    = canvas.getContext ('2d');
 
-canvas.width = 1024;
+canvas.width  = 1024;
 canvas.height = 576;
 
-ctx.imageSmoothingEnabled = false
+ctx.imageSmoothingEnabled = false;
 
-let range = 8192
+let height = 1536;
+const cam = {
+    X : 0,
+    Y : height,
+    Z : 0,
+    D : 1,
+};
 
-const scene = new Scenario
+const scene = new Scenario ({});
 
-for (let i=0; i < 1024; i++) {
+for (let i=0; i < scene.total; i++) {
     let line = new Line ();
-    line.z = i * scene.segL;
+    line.z = i * 256;
 
-
-    if (i % 16 === 0) {
-        let pedra = new Object3D ({
+    if (i%8 === 0) {
+        let obj = new Object3D ({
             pos : {
-                // x: (i % 2) ? -scene.roadW * 1.5 : scene.roadW * 1.25 ,
-                x: Math.round (Math.random () * range*8 - range*4),
-                y: 2048*1.5,
-                z: i * scene.segL
+                x: Math.random () * scene.width * 2  - scene.width,
+                y: 8 * 220,
+                z: i * 256,
             },
-            width : 240,
-            height: 440,
-            // color : 'rgba(255,255,255,0.5)',
+            width : 120,
+            height: 220,
+
             imgSrc: 'res/pedra2.png'
+
         })
 
-        let nuvem = new Object3D ({
-            pos : {
-                x: Math.round (Math.random () * range*8 - range*4),
-                y: Math.round (Math.random () * range*4 + 8192),
-                z: i * scene.segL
-            },
-            width : Math.random () * 768 + 64,
-            height: Math.random () * 128 + 64,
-            color : 'rgba(255,255,255,0.5)',
-            imgSrc: 'res/nuvem.png'
-        })
-
-        line.sprite.push (pedra)
-        line.sprite.push (nuvem)
+        line.sprite.push (obj)
     }
+
+    line.sprite.push (
+        new Object3D ({
+            pos : {
+                x: Math.random () * 8192 * 12 - 8192 * 4,
+                y: Math.random () * 8192 * 2 + 2048,
+                z: (i+scene.limit) * 256,
+            },
+            width : 16,
+            height: 16,
+            color : `white`,
+        })
+    )
+
     scene.lines.push (line);
 }
 
-let N = scene.lines.length;
-let pos = 1;
-
-let player= {
-    X : 0,
-    Y : 4096,
-    vel: 256,
+function pause () {
+    if (game.running) {
+        cancelAnimationFrame (game.frame);
+        let msg = "= EM PAUSA =";
+        ctx.font = 'bold 32px Roboto Mono'
+        ctx.fillStyle = 'black'
+        ctx.textAlign = textAlign.CENTER;
+        ctx.fillText (msg, (canvas.width/2) + 4, (canvas.height/2) + 4);
+        ctx.fillStyle = 'white'
+        ctx.fillText (msg, (canvas.width/2), (canvas.height/2));
+        game.running = false
+    } else {
+        render ();
+        game.running = true
+    }
 }
 
 input.handler = function () {
-    if (input.key.RIGHT) {
-        if (player.X < scene.width) player.X+=player.vel;
-    } else if (input.key.LEFT) {
-        if (player.X >  -scene.width) player.X-=player.vel;
-    }
+    vel = 64;
 
-    if (input.key.UP) {
-        if (player.Y < 8192*2) player.Y+=player.vel;
-    } else if (input.key.DOWN) {
-        if (player.Y > 2048) player.Y-=player.vel;
-    }
+    const limits = {
+        TOP    : 8192,
+        BOTTOM : 680,
+        LEFT   : -4096,
+        RIGHT  : 4096,
+    };
 
-    if (input.key.BTN_S) {
-        player.vel = 640
-    } else if (input.key.BTN_X) {
-        player.vel = 128
+    if (input.key.DOWN) {
+        cam.Y = (cam.Y < limits.TOP) ? cam.Y + vel : limits.TOP;
+    } else if (input.key.UP) {
+        cam.Y = (cam.Y > limits.BOTTOM) ? cam.Y - vel : limits.BOTTOM;
     } else {
-        player.vel = 256
+        cam.Y+=0;
     }
+
+    if (input.key.LEFT) {
+        cam.X = (cam.X > limits.LEFT) ? cam.X - vel : limits.LEFT;
+    } else if (input.key.RIGHT) {
+        cam.X = (cam.X < limits.RIGHT) ? cam.X + vel : limits.RIGHT;
+    } else {
+        cam.X+=0;
+    }
+
+    if (cam.Y < limits.TOP){
+        cam.Y += 32 * input.axis.y;
+    } else {
+        cam.Y = limits.TOP
+    }
+
+    if (cam.Y > limits.BOTTOM){
+        cam.Y +=  32 * input.axis.y;
+    } else {
+        cam.Y = limits.BOTTOM
+    }
+
+    if (cam.X < limits.RIGHT){
+        cam.X +=  32 * input.axis.x;
+    } else {
+        cam.X = limits.RIGHT
+    }
+
+    if (cam.X > limits.LEFT){
+        cam.X +=  32 * input.axis.x;
+    } else {
+        cam.X = limits.LEFT
+    }
+
+
+    if (input.button.S) {
+        shots.list.push (
+            new Shot ({
+                pos : {
+                    x: cam.X - 4,
+                    y: cam.Y - 4,
+                    z: cam.Z,
+                },
+
+                width : 2,
+                height: 2,
+                color : 'red',
+            })
+        );
+    }
+
 }
 
-let lap = 0;
-let dist = 512
 
 
-const objetos = []
+let shots = {
+    list : [],
+    update : (scene, cam, ctx) => {
+        shots.list.forEach (shot => {
+            shot.move ();
+            shot.project (cam);
+            shot.draw (ctx);
+            if (shot.pos.z > cam.Z + scene.limit * scene.segL) {
+                shots.list.pop (shot);
+            }
+        })
+    }
+};
 
-// for (let i=0; i < N; i+=4) {
-//     let nuvem = new Object3D ({
-//         pos : {
-//             x: Math.round (Math.random () * range*8 - range*4),
-//             y: Math.round (Math.random () * range*4),
-//             z: Math.round (Math.random () * i * scene.segL)
-//         },
-//         width : Math.random () * 768 + 64,
-//         height: Math.random () * 128 + 64,
-//         color : 'rgba(255,255,255,0.5)',
-//         imgSrc: 'res/nuvem.png'
-//     })
 
-//     objetos.push (nuvem)
-// }
-
-for (let i=0; i < N; i+=4) {
-    let pedra = new Object3D ({
-        pos : {
-            // x: (i % 2) ? -scene.roadW * 1.5 : scene.roadW * 1.25 ,
-            x: Math.round (Math.random () * range*8 - range*4),
-            y: 2048*1.5,
-            z: i * scene.segL
-        },
-        width : 240,
-        height: 440,
-        // color : 'rgba(255,255,255,0.5)',
-        imgSrc: 'res/pedra2.png'
-    })
-
-    objetos.push (pedra)
+const textAlign = {
+    LEFT   : 'left',
+    CENTER : 'center',
+    RIGHT  : 'right',
 }
 
-objetos.sort ((a,b) => {
-    return b.pos.z - a.pos.z;
-})
+function joystickDebug (x,y,align = textAlign.LEFT) {
+    ctx.fillStyle = "#fff";
+    ctx.font = '32px Roboto Mono'
+    ctx.textAlign = align;
+    ctx.fillText ('joystick', x, y);
+    ctx.fillText ('├ x : '+ input.axis.x.toFixed(2).toString().padStart(5,' '), x, y*2);
+    ctx.fillText ('└ y : '+ input.axis.y.toFixed(2).toString().padStart(5,' '), x, y*3);
 
 
+    ctx.fillText ('keys', x, 10+y*4);
+    ctx.fillText ('├  UP  : '+ input.key.UP.toString().padStart (5,' '), x, 10+y*5);
+    ctx.fillText ('├ DOWN : '+ input.key.DOWN.toString().padStart (5,' '), x, 10+y*6);
+    ctx.fillText ('├ LEFT : '+ input.key.LEFT.toString().padStart (5,' '), x, 10+y*7);
+    ctx.fillText ('└RIGHT : '+ input.key.RIGHT.toString().padStart (5,' '), x, 10+y*8);
 
-let items = 0
+    ctx.fillText ('buttons', x, 20+y*9);
+    ctx.fillText ('├   D  : '+ input.button.D.toString().padStart (5,' '), x, 20+y*10);
+    ctx.fillText ('├   X  : '+ input.button.X.toString().padStart (5,' '), x, 20+y*11);
+    ctx.fillText ('├   S  : '+ input.button.S.toString().padStart (5,' '), x, 20+y*12);
+    ctx.fillText ('├   C  : '+ input.button.C.toString().padStart (5,' '), x, 20+y*13);
+    ctx.fillText ('└START : '+ input.button.START.toString().padStart (5,' '), x, 20+y*14);
+}
 
-let cockpit = new Image ()
-cockpit.src = 'res/cockpit.png'
+function camDebug (x,y,align = textAlign.LEFT) {
+    ctx.fillStyle = "#fff";
+    ctx.font = '32px Roboto Mono'
+    ctx.textAlign = align;
+    ctx.fillText ('cam', x, y);
+    ctx.fillText ('├ x : '+ cam.X.toString().padStart (6,' '), x, y*2);
+    ctx.fillText ('├ y : '+ cam.Y.toString().padStart (6,' '), x, y*3);
+    ctx.fillText ('└ z : '+ cam.Z.toString().padStart (6,' '), x, y*4);
+}
 
-let mira = new Image ()
-mira.src = 'res/mira.png'
+function debug () {
+    camDebug (770, 30,);
+    joystickDebug (20,30);
+}
 
-function renderer () {
-    requestAnimationFrame (renderer);
-    // ctx.clearRect (0, 0, canvas.width, canvas.height);
-    const grd = ctx.createLinearGradient(0,0,0,canvas.width);
-    grd.addColorStop(0,"#43a");
-    grd.addColorStop(0.5,"#aff");
-    ctx.fillStyle = grd
-    ctx.fillRect (0, 0, canvas.width, canvas.height);
+
+let img = new Image ();
+img.src = 'res/tomcat.png';
+
+let mira = new Image ();
+mira.src = 'res/mira.png';
+
+const game = {
+    running : true,
+    frame : 0,
+}
+
+function render () {
+    game.frame = requestAnimationFrame (render);
+    ctx.clearRect (0, 0, canvas.width, canvas.height);
 
     input.handler ();
+    scene.update (canvas, cam);
 
-    let startPos = scene.update (dist, player, ctx, canvas)
+    shots.update (scene, cam, ctx);
 
-    items = 0
+    ctx.drawImage (mira, canvas.width/2 - mira.width / 2, canvas.height/2 - mira.height / 2, mira.width, mira.height);
+    ctx.save ();
+    if (cam.Y <= 800) {
+        ctx.shadowColor = 'rgba(0,0,0,0.4)';
+        ctx.shadowBlur = (cam.Y - 535) / 15;
+        ctx.shadowOffsetX = cam.X / 50;
+        ctx.shadowOffsetY = cam.Y - 535 ;
+    }
+    ctx.drawImage (img, canvas.width/2 - img.width * 2, 70 + canvas.height/2 - img.height * 2, img.width*4, img.height*4);
+    ctx.restore ();
 
-    // objetos.forEach (obj => {
-    //     if (obj.pos.z > scene.cam.Z && obj.pos.z <= (startPos + dist) * scene.segL) {
-    //         obj.project (scene.cam)
-    //         obj.draw (ctx)
-    //         items++
-    //     }
-    // })
-
-    ctx.drawImage (cockpit, 0, 0, canvas.width, cockpit.height *1.75 )
-    ctx.drawImage (mira, canvas.width/2 - mira.width/2, canvas.height/2 - mira.height/2, mira.width, mira.height)
-
-
-
-    HUD ();
-
+    debug ();
 }
 
-renderer ();
-
-function HUD () {
-    ctx.fillStyle = "#3a3";
-    ctx.font = '20px VT323'
-    // ctx.fillText (`objetos: ${items}`, 100, 530)
-    // ctx.fillText (`pos: ${scene.pos/scene.segL}`, 100, 560)
-    ctx.fillText (`Movimentação`, 100, 530)
-    ctx.fillText (`Setas direcionais`, 100, 560)
-
-    // ctx.fillText (`X: ${player.X}px`, 730, 530)
-    // ctx.fillText (`Y: ${player.Y}px`, 730, 560)
-    ctx.fillText (`S: acelerar`, 730, 530)
-    ctx.fillText (`X: frear`, 730, 560)
-
-
-}
+render ();

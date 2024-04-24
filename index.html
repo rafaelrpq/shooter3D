@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="theme-color" content="#666">
         <meta charset="utf-8">
         <meta http-equiv="Cache-Control" content="no-cache">
@@ -12,6 +12,7 @@
             shooter game in pseudo 3D
             Desenvolvido por: Rafael Prates Quevedo
             Data: 2024-03-06
+            Atualizado: 2024-04-24
         ">
 
         <link rel="manifest" href="manifest.json">
@@ -22,51 +23,32 @@
             @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
             @import 'css/style.css';
             @import 'css/snackbar.css';
-            /*
-            canvas {
-                border: 1px solid;
-                border: 1px solid #fff;
-                background: linear-gradient(#225,#505);
-                /*
-                background: linear-gradient(#87f,#aff);
-                width: 75%;
-
-            }
-
-            body {
-                background-color: #000;
-                margin: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-            }
-            */
-
+      
+            @import 'style.css';
         </style>
-        <script src="src/app/appManager.js" defer></script>
+        <script src="src/Object3D.js" defer></script>
+        <script src="src/Shot.js" defer></script>
+        <script src="src/Scenario.js" defer></script>
+        <script src="src/Line.js" defer></script>
         <script src="src/input.js" defer></script>
-        <script src="src/eventListeners.js" defer></script>
-        <script src="src/scenario.js" defer></script>
-        <script src="src/object3D.js" defer></script>
         <script src="src/engine.js" defer></script>
     </head>
     <body>
         <canvas></canvas>
-        <div id="controles">
-            <div class="circle direcional">
-                <span></span> <button data-value="ArrowUp">△</button> <span></span>
-                <button data-value="ArrowLeft">◁</button> <span></span> <button data-value="ArrowRight">▷</button>
-                <span></span><button data-value="ArrowDown">▽</button><span></span>
-            </div>
-            <div class="start">
-               <button data-value="Enter">ENTER</button>
-            </div>
-            <div class="circle triggers">
-                <span></span> <button data-value="d">D</button> <span></span>
-                <button data-value="s">S</button> <span></span> <button data-value="c">C</button>
-                <span></span> <button data-value="x">X</button> <span></span>
-            </div>
+        <div id="controller">
+            <section class="circle" id="analog">
+                <button id="joystick">&nbsp;</button>
+            </section>
+            <section id="options">
+                <button key="Enter">&nbsp;</button>
+                <div>START</div>
+            </section>
+            <section class="circle" id="triggers">
+                <button key="s">S</button>
+                <button key="d">D</button>
+                <button key="x">X</button>
+                <button key="c">C</button>
+            </section>
         </div>
     </body>
 </html>

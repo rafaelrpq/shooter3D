@@ -1,18 +1,19 @@
-var DYNAMIC_CACHE = 'v20240312-0925';
+var DYNAMIC_CACHE = 'v20240424';
 
 var urlsToCache = [
     'index.html',
+    
     'css/style.css',
     'css/snackbar.css',
+    
     'src/engine.js',
-    'src/eventListeners.js',
     'src/input.js',
-    'src/object3D.js',
-    'src/scenario.js',
+    'src/Object3D.js',
+    'src/Scenario.js',
     'src/app/appManager.js',
+    
     'res/cockpit.png',
     'res/mira.png',
-    'res/nuvem.png',
     'res/pedra2.png',
 ];
 

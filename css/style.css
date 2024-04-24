@@ -2,156 +2,169 @@ html {
     font-size: 62.5%;
 }
 
-* {
-    box-sizing: border-box;
+canvas {
+    border: .1rem inset rgba(255,255,255,0.9);
+    border-radius: .4rem;
+    /*image-rendering: pixelated;*/
+    background-color:#333;
 }
 
 body {
+    background-color: #ccd;
+    background-image: url('res/diagonal-noise.png');
     margin: 0;
-    height: 100vh;
-    display: flex;
+    padding: 0;
     align-items: center;
     justify-content: center;
-    background-color: #666;
-    font-size: 1.6rem;
-    font-family: arial;
-}
-
-canvas {
-    border: .1rem solid #333;
-    /*border-radius: .5rem;*/
-    width: 100vw;
-    height: auto;
-    /*padding: 1rem;*/
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
-
-#controles {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 15rem;
-    z-index: 1;
-    display: none;
+    height: 99vh;
+    display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    overflow: hidden;
+}
+
+div#controller {
+    width: 85%;
+    display:none;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+section.circle {
+    width: 12.8rem;
+    height: 12.8rem;
+    border: .1rem inset rgba(0,0,0,0.1);
+    border-radius: 9rem;
+    box-shadow: .3rem .3rem .5rem inset rgba(0,0,0,0.5);
+}
+
+section#analog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button#joystick {
+    width: 8rem;
+    height: 8rem;
+    border: .1rem outset rgba(0,0,0,0.05);
+    border-radius: 9rem;
+    box-shadow:
+        .3rem .3rem .5rem rgba(0,0,0,0.5),
+        .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.15);
+}
+
+button {
     user-select: none;
 }
 
-.circle {
-    border: 0.2rem solid rgba(0,0,0,0.3);
-    border-radius: 50%;
-    width: 13.2rem;
-    height: 13.2rem;
-    display: grid;
-    grid-template-areas:
-        'a b c'
-        'd e f'
-        'g h i';
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    background-color: rgba(100,100,100,0.3);
-    overflow: hidden;
-    padding: .5rem;
-    align-items: center;
-    justify-content: center;
-}
-
-
-
-.circle button, .circle.direcional span:nth-child(5) {
-    width: 4rem;
-    height: 4rem;
+section#triggers {
+    transform: rotate(-45deg);
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: center;
-    background-color: rgb(100, 100, 150, 0.3);
-    border: 0.2rem solid rgba(0,0,0,0.3);
-    /*border-radius: .5rem;*/
-    margin: -1px;
-    color: rgba(255, 255, 255, 0.2);
-}
-
-.circle.direcional span:nth-child(5) {
     border: none;
-    background-color: rgb(90, 90, 140, 0.3) !important;
+    box-shadow: none;
 }
 
-.circle button[data-value='ArrowUp'] {
-    border-bottom : none;
-    border-radius: .5rem .5rem 0 0;
+:root {
+    --btnWidth : 4rem;
+}
+
+#triggers button {
+    width: var(--btnWidth);
+    height: var(--btnWidth);
+    border: .1rem solid rgba(0,0,0,0.1);
+    border-radius: 9rem;
+    margin: .5rem;
+    transform: rotate(45deg);
     box-shadow:
-        .1rem -0.2rem .5rem inset rgba(10,10,15, 0.1),
-        .1rem .1rem .5rem inset rgba(255,255,255, 0.3);
-}
-
-.circle button[data-value='ArrowDown'] {
-    border-top : none;
-    border-radius: 0 0 .5rem .5rem;
-    box-shadow:
-        .1rem .25rem .5rem inset rgba(10,10,15, 0.1),
-        .1rem -.15rem .5rem inset rgba(255,255,255, 0.2);
-}
-
-.circle button[data-value='ArrowLeft'] {
-    border-right : none;
-    border-radius: .5rem 0 0 .5rem;
-    box-shadow:
-        -.2rem  .1rem .5rem inset rgba(10,10,15, 0.1),
-        .1rem .1rem .5rem inset rgba(255,255,255, 0.3);
-}
-
-.circle button[data-value='ArrowRight'] {
-    border-left : none;
-    border-radius: 0 .5rem .5rem 0;
-    box-shadow:
-        .2rem .1rem .5rem inset rgba(10,10,15, 0.1),
-        -.1rem .1rem .5rem inset rgba(255,255,255, 0.3);
-}
-
-.circle.triggers button {
-    border-radius: 50%;
-    color: white;
-    font-weight: bold;
-    box-shadow: .1rem .1rem .5rem inset rgba(255,255,255, 0.3);
-}
-
-.start {
-    width: 33vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.start button {
-    border-radius: .7rem;
-    width: 10rem;
-    height: 2.4rem;
-    background-color: rgba(64,64,64,0.5);
+        .3rem .3rem .5rem rgba(0,0,0,0.5),
+        .1rem .1rem .5rem inset rgba(255,255,255,0.5);
     color: #fff;
-    border: .1rem solid;
+    font-weight: bold;
+    text-shadow: 0 0 .25rem rgba(0,0,0,1);
+}
+
+#triggers button:active {
+    box-shadow: none;
+}
+
+#triggers button:nth-child(1) {
+    background: rgba(0,180,0,1);
+}
+#triggers button:nth-child(2) {
+    background: rgba(50,50,255,1);
+}
+#triggers button:nth-child(3) {
+    background: rgba(250,190,0,1);
+}
+#triggers button:nth-child(4) {
+    background: rgba(255,0,0,1);
+}
+
+#options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    color: #666;
+    font-family: 'arial', 'sans serif';
+    font-style: italic;
+    font-weight: bold;
+}
+
+#options button {
+    width: 4.8rem;
+    border-radius: 9rem;
+    border: .1rem solid rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.15);
+    box-shadow:
+        .3rem .3rem .5rem rgba(0,0,0,0.5),
+        .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+    margin: 1rem;
+}
+
+#options button:active {
+    box-shadow: none;
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {
-
-    #controles {
+    div#controller {
         display: flex;
     }
 }
 
-@media only screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
+@media screen and (orientation: portrait) {
     canvas {
-        height: 100vh;
-        width: auto;
+        width: 90%;
     }
 }
 
-@media only screen and (orientation: landscape) and (not (aspect-ratio: 4/3)){
+@media screen and (orientation: landscape) {
     canvas {
-        height: 100vh;
-        width: auto;
+        width: 75%;
+    }
+
+    div#controller {
+        position: absolute;
+        bottom: 1rem;
+    }
+
+
+    #triggers button:nth-child(1) {
+        background: rgba(0,180,0,.15);
+    }
+    #triggers button:nth-child(2) {
+        background: rgba(50,50,255,.15);
+    }
+    #triggers button:nth-child(3) {
+        background: rgba(250,190,0,.15);
+    }
+    #triggers button:nth-child(4) {
+        background: rgba(255,0,0,.15);
     }
 }
