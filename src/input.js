@@ -111,7 +111,7 @@ document.addEventListener ('touchend', input.listener, {passive: false});
 
 document.querySelector ('[key=Enter]').ontouchstart = (e) => {
     pause ()
-}, {'passive' : false});
+}, {'passive' : true});
 
 document.addEventListener ('keydown', e => {
     if (e.key === 'Enter') pause ();
