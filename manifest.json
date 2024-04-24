@@ -35,5 +35,14 @@
     "categories": [
         "utilities"
     ],
-    "form_factor" : "wide",
+    "screenshots": [
+       {
+
+         "src": "res/preview.png",
+          "sizes": "1024x576",
+          "type": "image/png",
+          "form_factor": "wide",
+          "label": "Application"
+        }
+     ]
 }
