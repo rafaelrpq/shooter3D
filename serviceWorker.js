@@ -1,18 +1,18 @@
-var DYNAMIC_CACHE = 'v20240424-2017';
+var DYNAMIC_CACHE = 'v20240424-2030';
 
 var urlsToCache = [
     'index.html',
 
-    // 'manifest.json',
+    'manifest.json',
 
     'css/snackbar.css',
     'css/style.css',
 
-    'src/app/appManager.js',
     'src/engine.js',
     'src/input.js',
     'src/Object3D.js',
     'src/Scenario.js',
+    'src/app/appManager.js',
 
     'res/cockpit.png',
     'res/diagonal-noise.png',
