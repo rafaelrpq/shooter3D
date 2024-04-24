@@ -232,7 +232,7 @@ function render () {
     ctx.drawImage (img, canvas.width/2 - img.width * 2, 70 + canvas.height/2 - img.height * 2, img.width*4, img.height*4);
     ctx.restore ();
 
-    debug ();
+    // debug (); 
 }
 
 render ();
