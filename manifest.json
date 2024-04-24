@@ -25,12 +25,12 @@
     "description": "shooter game in pseudo 3D",
     "background_color": "#666",
     "theme_color": "#666",
-    "display": "standalone",
+    "display": "fullscreen",
     "lang": "pt",
     "dir": "ltr",
-    "orientation": "landscape",
+    "orientation": "any",
     "display_override": [
-        "standalone"
+        "fullscreen"
     ],
     "categories": [
         "utilities"
