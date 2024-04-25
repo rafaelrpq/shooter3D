@@ -1,4 +1,4 @@
-var DYNAMIC_CACHE = 'v20240424-2033';
+var DYNAMIC_CACHE = 'v20240425';
 
 var urlsToCache = [
     'index.html',
@@ -11,6 +11,7 @@ var urlsToCache = [
     'src/engine.js',
     'src/input.js',
     'src/Object3D.js',
+    'src/Player.js',
     'src/Scenario.js',
     'src/app/appManager.js',
 

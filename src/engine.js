@@ -200,10 +200,6 @@ function debug () {
     joystickDebug (20,30);
 }
 
-
-let img = new Image ();
-img.src = 'res/tomcat.png';
-
 let mira = new Image ();
 mira.src = 'res/mira.png';
 
@@ -212,9 +208,19 @@ const game = {
     frame : 0,
 }
 
+const player = new Player (canvas);
+
 function render () {
     game.frame = requestAnimationFrame (render);
     ctx.clearRect (0, 0, canvas.width, canvas.height);
+
+    const grad=ctx.createLinearGradient(0,0,0,canvas.height/1.2);
+    grad.addColorStop(0, "darkblue");
+    grad.addColorStop(1, "purple");
+
+    // Fill rectangle with gradient
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0, canvas.width, canvas.height);
 
     input.handler ();
     scene.update (canvas, cam);
@@ -222,6 +228,7 @@ function render () {
     shots.update (scene, cam, ctx);
 
     ctx.drawImage (mira, canvas.width/2 - mira.width / 2, canvas.height/2 - mira.height / 2, mira.width, mira.height);
+
     ctx.save ();
     if (cam.Y <= 800) {
         ctx.shadowColor = 'rgba(0,0,0,0.4)';
@@ -229,10 +236,9 @@ function render () {
         ctx.shadowOffsetX = cam.X / 50;
         ctx.shadowOffsetY = cam.Y - 535 ;
     }
-    ctx.drawImage (img, canvas.width/2 - img.width * 2, 70 + canvas.height/2 - img.height * 2, img.width*4, img.height*4);
+    player.draw (input.axis);
     ctx.restore ();
 
-    // debug (); 
+    // debug ();
 }
-
 render ();
