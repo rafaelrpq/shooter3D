@@ -125,5 +125,27 @@ document.addEventListener ('keydown', e => {
 
 
 document.querySelector ('#off').addEventListener ('touchstart', e => {
-    window.close ();
+    let dialog = document.createElement ('dialog');
+    document.body.appendChild (dialog);
+    dialog.innerHTML = '<span><p>Deseja encerrar o programa?</p> Seus progresso atual não será salvo.</span>';
+    let confirm = document.createElement ('button');
+    let cancel  = document.createElement ('button');
+
+    confirm.innerHTML = "Encerrar";
+    cancel.innerHTML = "Cancelar";
+    
+    confirm.addEventListener('touchstart', () => {
+        window.close ();
+    })
+    cancel.addEventListener('touchstart', () => {
+        dialog.close ();
+        dialog.remove ();
+    })
+
+    dialog.appendChild (cancel)
+    dialog.appendChild (confirm)
+    
+    if (game.running) pause ();
+    dialog.showModal ();
+
 })

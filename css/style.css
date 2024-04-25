@@ -134,6 +134,71 @@ section#triggers {
 
 #off {
     display: none;
+    position: absolute;
+    top: .8rem;
+    left: 2rem;
+    z-index: 1;
+    font-size: 3.6rem;
+    font-weight: bold;
+    color: #a88;
+    text-shadow: 0rem 0rem .1rem #000;
+
+    box-shadow:
+        .01rem .01rem .5rem rgba(0,0,0,0.1),
+        .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+    border: .1rem groove rgba(0,0,0,0.3);
+    border-radius: 9rem;
+    background-color: #ccc;
+
+    width: 4rem;
+    height: 4rem;
+    line-height: 3.8rem;
+}
+
+dialog {
+    width: 30rem;
+    height: 20rem;
+    border: .1rem outset rgba(0,0,0,0.3);
+    border-radius: .7rem;
+    box-shadow:
+        .5rem .5rem .5rem rgba(0,0,0,0.7),
+        .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+
+    outline: none;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+dialog p {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+dialog span {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+dialog button {
+    margin: 1rem;
+    flex-basis: 40%;
+    border: .1rem solid rgba(0,0,0,0.1);
+    border-radius: .5rem;
+    height: 3rem;
+    box-shadow:
+        .3rem .3rem .5rem rgba(0,0,0,0.5),
+        .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+}
+
+dialog button:last-child {
+    background-color: #f33;
+    color: #fff;
+    text-shadow: 0 0 .3rem rgba(0,0,0,0.7);
+    font-weight: bold;
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {
@@ -144,25 +209,6 @@ section#triggers {
     #off {
         /*all: unset;*/
         display: block;
-        position: absolute;
-        top: .8rem;
-        left: 2rem;
-        z-index: 1;
-        font-size: 3.6rem;
-        font-weight: bold;
-        color: #a88;
-        text-shadow: 0rem 0rem .1rem #000;
-
-        box-shadow:
-            .01rem .01rem .5rem rgba(0,0,0,0.1),
-            .1rem .1rem .5rem inset rgba(255,255,255,0.5);
-        border: .1rem groove rgba(0,0,0,0.3);
-        border-radius: 9rem;
-        background-color: #ccc;
-
-        width: 4rem;
-        height: 4rem;
-        line-height: 3.8rem;
     }
 }
 
