@@ -148,7 +148,7 @@ section#triggers {
         top: .8rem;
         left: 2rem;
         z-index: 1;
-        font-size: 2.4rem;
+        font-size: 3.6rem;
         font-weight: bold;
         color: #a88;
         text-shadow: 0rem 0rem .1rem #000;
@@ -162,7 +162,7 @@ section#triggers {
 
         width: 4rem;
         height: 4rem;
-        line-height: 4rem;
+        line-height: 3.8rem;
     }
 }
 
