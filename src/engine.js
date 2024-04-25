@@ -135,6 +135,12 @@ input.handler = function () {
                 color : 'red',
             })
         );
+        input.button.S = false;
+    }
+
+    if (input.button.D) {
+        game.debug = !game.debug;
+        input.button.D = false;
     }
 
 }
@@ -164,7 +170,7 @@ const textAlign = {
 
 function joystickDebug (x,y,align = textAlign.LEFT) {
     ctx.fillStyle = "#fff";
-    ctx.font = '32px Roboto Mono'
+    ctx.font = '32px VT323'
     ctx.textAlign = align;
     ctx.fillText ('joystick', x, y);
     ctx.fillText ('├ x : '+ input.axis.x.toFixed(2).toString().padStart(5,' '), x, y*2);
@@ -178,16 +184,16 @@ function joystickDebug (x,y,align = textAlign.LEFT) {
     ctx.fillText ('└RIGHT : '+ input.key.RIGHT.toString().padStart (5,' '), x, 10+y*8);
 
     ctx.fillText ('buttons', x, 20+y*9);
-    ctx.fillText ('├   D  : '+ input.button.D.toString().padStart (5,' '), x, 20+y*10);
-    ctx.fillText ('├   X  : '+ input.button.X.toString().padStart (5,' '), x, 20+y*11);
-    ctx.fillText ('├   S  : '+ input.button.S.toString().padStart (5,' '), x, 20+y*12);
-    ctx.fillText ('├   C  : '+ input.button.C.toString().padStart (5,' '), x, 20+y*13);
+    ctx.fillText ('├  D   : '+ input.button.D.toString().padStart (5,' '), x, 20+y*10);
+    ctx.fillText ('├  X   : '+ input.button.X.toString().padStart (5,' '), x, 20+y*11);
+    ctx.fillText ('├  S   : '+ input.button.S.toString().padStart (5,' '), x, 20+y*12);
+    ctx.fillText ('├  C   : '+ input.button.C.toString().padStart (5,' '), x, 20+y*13);
     ctx.fillText ('└START : '+ input.button.START.toString().padStart (5,' '), x, 20+y*14);
 }
 
 function camDebug (x,y,align = textAlign.LEFT) {
     ctx.fillStyle = "#fff";
-    ctx.font = '32px Roboto Mono'
+    ctx.font = '32px VT323'
     ctx.textAlign = align;
     ctx.fillText ('cam', x, y);
     ctx.fillText ('├ x : '+ cam.X.toString().padStart (6,' '), x, y*2);
@@ -205,7 +211,8 @@ mira.src = 'res/mira.png';
 
 const game = {
     running : true,
-    frame : 0,
+    frame   : 0,
+    debug   : false,
 }
 
 const player = new Player (canvas);
@@ -239,6 +246,6 @@ function render () {
     player.draw (input.axis);
     ctx.restore ();
 
-    // debug ();
+    if (game.debug)  debug ();
 }
 render ();

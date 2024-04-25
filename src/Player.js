@@ -5,7 +5,7 @@ class Player {
 
         this.pos = {
             x : canvas.width/2 - this.width/2,
-            y : canvas.height/2 - this.height/2,
+            y : 90 + canvas.height/2 - this.height/2,
         };
 
         this.img = new Image ();

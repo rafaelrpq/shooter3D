@@ -73,7 +73,7 @@ joystick.addEventListener ('touchstart', e => {
     joystick.addEventListener ('touchmove', e => {
         const drag = e.targetTouches[0];
         input.axis.x = Math.round (drag.pageX) - initialX;
-        input.axis.y = Math.round (drag.pageY) - initialY;
+        input.axis.y = -(Math.round (drag.pageY) - initialY);
 
             input.axis.x = (input.axis.x > 32) ? 32 : input.axis.x;
             input.axis.x = (input.axis.x < -32) ? -32 : input.axis.x;
@@ -82,18 +82,18 @@ joystick.addEventListener ('touchstart', e => {
 
         // console.log (input.axis.x, input.axis.y);
 
-        joystick.style.transform = `translate3d(${input.axis.x}px, ${input.axis.y}px, 0)`;
+        joystick.style.transform = `translate3d(${input.axis.x}px, ${-input.axis.y}px, 0)`;
 
         input.axis.x /=32;
         input.axis.y /=32;
-    }, {passive: false});
-}, {passive: false});
+    }, {'passive': false});
+}, {'passive': false});
 
 joystick.addEventListener ('touchend', e => {
     input.axis.x = 0;
     input.axis.y = 0;
     joystick.style.transform = `translate3d(0, 0, 0)`;
-}, {passive: false});
+}, {'passive': false});
 
 const buttons = document.querySelectorAll ('button');
 buttons.forEach (button => {
@@ -101,6 +101,12 @@ buttons.forEach (button => {
         e.preventDefault ();
         e.stopPropagation()
         e.stopImmediatePropagation();
+    });
+
+    button.addEventListener ('touchstart', e => {
+        e.preventDefault ();
+        // e.stopPropagation()
+        // e.stopImmediatePropagation();
     });
 })
 

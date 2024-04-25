@@ -1,5 +1,6 @@
 html {
     font-size: 62.5%;
+    font-family: 'arial', 'sans serif';
 }
 
 canvas {
@@ -112,7 +113,6 @@ section#triggers {
     align-items: center;
     justify-content: end;
     color: #666;
-    font-family: 'arial', 'sans serif';
     font-style: italic;
     font-weight: bold;
 }
