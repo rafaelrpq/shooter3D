@@ -136,7 +136,6 @@ input.handler = function () {
             })
         );
         input.button.S = false;
-        navigator.vibration (50);
     }
 
     if (input.button.D) {
