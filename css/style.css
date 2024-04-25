@@ -140,29 +140,29 @@ section#triggers {
     div#controller {
         display: flex;
     }
-    
+
     #off {
-        all: unset;
+        /*all: unset;*/
+        display: block;
         position: absolute;
         top: .8rem;
         left: 2rem;
         z-index: 1;
-        font-size: 3.2rem;
+        font-size: 2.4rem;
         font-weight: bold;
         color: #a88;
         text-shadow: 0rem 0rem .1rem #000;
 
-        /*box-shadow: .1rem .1rem .3rem rgba(0,0,0,0.3);*/
-        /*border: .2rem outset rgba(0,0,0,0.5);*/
-        /*border-radius: 9rem;*/
+        box-shadow:
+            .01rem .01rem .5rem rgba(0,0,0,0.1),
+            .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+        border: .1rem groove rgba(0,0,0,0.3);
+        border-radius: 9rem;
+        background-color: #ccc;
 
         width: 4rem;
         height: 4rem;
         line-height: 4rem;
-
-        display: flex;
-        align-items: center;
-        justify-content: center
     }
 }
 

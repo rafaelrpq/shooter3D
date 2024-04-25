@@ -103,11 +103,11 @@ buttons.forEach (button => {
         e.stopImmediatePropagation();
     });
 
-    button.addEventListener ('touchstart', e => {
-        e.preventDefault ();
-        // e.stopPropagation()
-        // e.stopImmediatePropagation();
-    });
+    // button.addEventListener ('touchstart', e => {
+    //     e.preventDefault ();
+    //     // e.stopPropagation()
+    //     // e.stopImmediatePropagation();
+    // });
 })
 
 document.addEventListener ('keydown', input.listener, {passive: false});
