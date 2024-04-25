@@ -57,10 +57,10 @@ function pause () {
     if (game.running) {
         cancelAnimationFrame (game.frame);
         let msg = "= EM PAUSA =";
-        ctx.font = 'bold 32px Roboto Mono'
+        ctx.font = '40px VT323'
         ctx.fillStyle = 'black'
         ctx.textAlign = textAlign.CENTER;
-        ctx.fillText (msg, (canvas.width/2) + 4, (canvas.height/2) + 4);
+        ctx.fillText (msg, (canvas.width/2) + 2, (canvas.height/2) + 2);
         ctx.fillStyle = 'white'
         ctx.fillText (msg, (canvas.width/2), (canvas.height/2));
         game.running = false
@@ -80,9 +80,9 @@ input.handler = function () {
         RIGHT  : 4096,
     };
 
-    if (input.key.DOWN) {
+    if (input.key.UP) {
         cam.Y = (cam.Y < limits.TOP) ? cam.Y + vel : limits.TOP;
-    } else if (input.key.UP) {
+    } else if (input.key.DOWN) {
         cam.Y = (cam.Y > limits.BOTTOM) ? cam.Y - vel : limits.BOTTOM;
     } else {
         cam.Y+=0;
