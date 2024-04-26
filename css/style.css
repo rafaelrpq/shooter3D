@@ -151,12 +151,16 @@ section#triggers {
     border-radius: 9rem;
     background-color: #ccc;
 
+
     width: 4rem;
     height: 4rem;
     /*line-height: 3.8rem;*/
     line-height: 4rem;
 }
 
+#off:before {
+    content: '\23FB';
+}
 
 dialog {
     width: 30rem;
