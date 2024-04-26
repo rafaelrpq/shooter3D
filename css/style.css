@@ -147,6 +147,9 @@ section#triggers {
     box-shadow:
         .01rem .01rem .5rem rgba(0,0,0,0.1),
         .1rem .1rem .5rem inset rgba(255,255,255,0.5);
+
+
+
     border: .1rem groove rgba(0,0,0,0.3);
     border-radius: 9rem;
     background-color: #ccc;
@@ -155,12 +158,17 @@ section#triggers {
     width: 4rem;
     height: 4rem;
     /*line-height: 3.8rem;*/
-    line-height: 4rem;
+    line-height: 4.6rem;
 }
 
-#off:before {
-    content: '\23FB';
+#off img {
+    color: #a88;
+    filter: invert(50%) sepia(100%) saturate(8000%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
+
+/*#off:before {*/
+/*    content: '\23FB';*/
+/*}*/
 
 dialog {
     width: 30rem;
