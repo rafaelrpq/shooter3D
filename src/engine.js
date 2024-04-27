@@ -14,6 +14,8 @@ const cam = {
     D : 1,
 };
 
+const effect = new Audio ('');
+
 const scene = new Scenario ({});
 
 for (let i=0; i < scene.total; i++) {
@@ -30,7 +32,7 @@ for (let i=0; i < scene.total; i++) {
             width : 120,
             height: 220,
 
-            imgSrc: 'res/pedra2.png'
+            imgSrc: 'res/sprites/pedra2.png'
 
         })
 
@@ -122,6 +124,9 @@ input.handler = function () {
 
 
     if (input.button.S) {
+        if (effect.src !== 'res/audio/shot.mp3') {
+            effect.src = 'res/audio/shot.mp3'
+        }
         shots.list.push (
             new Shot ({
                 pos : {
@@ -136,6 +141,13 @@ input.handler = function () {
             })
         );
         input.button.S = false;
+        effect.play().then(() => {
+            console.log('Áudio reproduzido com sucesso!');
+        }).catch(error => {
+            console.error('Erro ao reproduzir áudio:', error);
+        }).finally (
+            console.log ('finalizado')
+        );
     }
 
     if (input.button.D) {
@@ -207,7 +219,7 @@ function debug () {
 }
 
 let mira = new Image ();
-mira.src = 'res/mira.png';
+mira.src = 'res/sprites/mira.png';
 
 const game = {
     running : true,

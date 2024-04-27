@@ -9,7 +9,7 @@ class Player {
         };
 
         this.img = new Image ();
-        this.img.src = 'res/tomcat.png';
+        this.img.src = 'res/sprites/tomcat.png';
     }
 
     draw (axis) {

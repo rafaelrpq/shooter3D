@@ -1,4 +1,4 @@
-var DYNAMIC_CACHE = 'v20240426-a';
+var DYNAMIC_CACHE = 'v20240427';
 var urlsToCache = [
     'index.html',
 
@@ -14,10 +14,12 @@ var urlsToCache = [
     'src/Scenario.js',
     'src/app/appManager.js',
 
-    'res/cockpit.png',
-    'res/diagonal-noise.png',
-    'res/mira.png',
-    'res/pedra2.png',
+    'res/audio/shot.mp3',
+
+    'res/sprites/cockpit.png',
+    'res/sprites/diagonal-noise.png',
+    'res/sprites/mira.png',
+    'res/sprites/pedra2.png',
 ];
 
 self.addEventListener ('install', function (event) {

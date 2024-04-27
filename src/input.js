@@ -22,7 +22,7 @@ const input = {
    listener : (e) => {
         let state = (e.type === 'keydown' || e.type === 'touchstart');
 
-        input.parser (e.key, state);
+        input.parser (e.code, state);
         input.parser (e.target.getAttribute('key'), state);
     },
 
@@ -40,16 +40,16 @@ const input = {
             case 'ArrowRight' :
                 input.key.RIGHT = state;
                 break;
-            case 'd' :
+            case 'KeyD' :
                 input.button.D = state;
                 break;
-            case 'x' :
+            case 'KeyX' :
                 input.button.X = state;
                 break;
-            case 's' :
+            case 'KeyS' :
                 input.button.S = state;
                 break;
-            case 'c' :
+            case 'KeyC' :
                 input.button.C = state;
                 break;
             case 'Enter' :
@@ -148,4 +148,4 @@ document.querySelector ('#off').addEventListener ('touchstart', e => {
     if (game.running) pause ();
     dialog.showModal ();
 
-})
+}, {'passive':true})

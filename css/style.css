@@ -12,7 +12,7 @@ canvas {
 
 body {
     background-color: #ccd;
-    background-image: url('../res/diagonal-noise.png');
+    background-image: url('../res/bg/diagonal-noise.png');
     margin: 0;
     padding: 0;
     align-items: center;
