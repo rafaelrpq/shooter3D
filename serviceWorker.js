@@ -1,4 +1,4 @@
-var DYNAMIC_CACHE = 'v20240429';
+var DYNAMIC_CACHE = 'v20240429-1';
 var urlsToCache = [
     'index.html',
 
@@ -16,8 +16,9 @@ var urlsToCache = [
 
     'res/audio/shot.mp3',
 
+    'res/bg/diagonal-noise.png',
+
     'res/sprites/cockpit.png',
-    'res/sprites/diagonal-noise.png',
     'res/sprites/mira.png',
     'res/sprites/pedra2.png',
 ];
