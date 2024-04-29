@@ -4,10 +4,10 @@ html {
 }
 
 canvas {
-    border: .1rem inset rgba(255,255,255,0.9);
-    border-radius: .4rem;
+    /*border: .1rem inset rgba(255,255,255,0.9);*/
+    /*border-radius: .4rem;*/
     /*image-rendering: pixelated;*/
-    background-color:#333;
+    /*background-color:#333;*/
 }
 
 body {
@@ -150,10 +150,10 @@ section#triggers {
 
         /*-.05rem -.05rem .0rem rgba(0,0,0,1),*/
         .1rem .1rem .1rem rgba(0,0,0,0.4),
-        .1rem .1rem .1rem inset rgba(255,255,255,1);
+        .1rem .1rem .1rem inset rgba(255,255,255,0.3);
 
     border-radius: 9rem;
-    background-color: #ccc;
+    background-color: rgba(200,200,200,0.5);
 
 
     width: 4rem;
@@ -230,14 +230,11 @@ dialog button:last-child {
 
 @media screen and (orientation: portrait) {
     canvas {
-        width: 90%;
+        width: 95%;
     }
 }
 
 @media screen and (orientation: landscape) {
-    canvas {
-        width: 75%;
-    }
 
     div#controller {
         position: absolute;

@@ -1,8 +1,8 @@
 const canvas = document.querySelector ('canvas');
 const ctx    = canvas.getContext ('2d');
 
-canvas.width  = 1024;
-canvas.height = 576;
+canvas.width  = window.innerWidth;
+canvas.height = window.innerHeight;
 
 ctx.imageSmoothingEnabled = false;
 
