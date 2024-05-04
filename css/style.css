@@ -219,8 +219,10 @@ dialog button:last-child {
 
 @media only screen and (hover: none) and (pointer: coarse) {
     div#controller {
-        display: flex;
-    }
+       display: flex;
+        position: absolute;
+        bottom: 1rem;
+     }
 
     #off {
         /*all: unset;*/
@@ -229,17 +231,17 @@ dialog button:last-child {
 }
 
 @media screen and (orientation: portrait) {
-    canvas {
-        width: 95%;
-    }
+    /*canvas {*/
+    /*    width: 95%;*/
+    /*}*/
 }
 
 @media screen and (orientation: landscape) {
 
-    div#controller {
-        position: absolute;
-        bottom: 1rem;
-    }
+    /*div#controller {*/
+    /*   position: absolute;*/
+    /*   bottom: 1rem;*/
+    /*}*/
 
 
     #triggers button:nth-child(1) {

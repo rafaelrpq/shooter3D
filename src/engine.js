@@ -214,7 +214,7 @@ function camDebug (x,y,align = textAlign.LEFT) {
 }
 
 function debug () {
-    camDebug (770, 30,);
+    camDebug (canvas.width - 200, 30,);
     joystickDebug (20,30);
 }
 
