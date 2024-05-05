@@ -17,7 +17,7 @@ body {
     padding: 0;
     align-items: center;
     justify-content: center;
-    height: 99vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -115,6 +115,7 @@ section#triggers {
     color: #666;
     font-style: italic;
     font-weight: bold;
+    user-select: none;
 }
 
 #options button {
@@ -230,13 +231,13 @@ dialog button:last-child {
     }
 }
 
-@media screen and (orientation: portrait) {
-    /*canvas {*/
-    /*    width: 95%;*/
-    /*}*/
-}
+/*@media screen and (orientation: portrait) {*/
+/*    canvas {*/
+/*       width: 95%;*/
+/*    }*/
+/*}*/
 
-@media screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) {
 
     /*div#controller {*/
     /*   position: absolute;*/

@@ -95,20 +95,20 @@ joystick.addEventListener ('touchend', e => {
     joystick.style.transform = `translate3d(0, 0, 0)`;
 }, {'passive': false});
 
-const buttons = document.querySelectorAll ('button');
-buttons.forEach (button => {
-    button.addEventListener ('contextmenu', e => {
-        e.preventDefault ();
-        e.stopPropagation()
-        e.stopImmediatePropagation();
-    });
+// const buttons = document.querySelectorAll ('button');
+// buttons.forEach (button => {
+//     button.addEventListener ('contextmenu', e => {
+//         e.preventDefault ();
+//         e.stopPropagation()
+//         e.stopImmediatePropagation();
+//     });
 
-    // button.addEventListener ('touchstart', e => {
-    //     e.preventDefault ();
-    //     // e.stopPropagation()
-    //     // e.stopImmediatePropagation();
-    // });
-})
+//     // button.addEventListener ('touchstart', e => {
+//     //     e.preventDefault ();
+//     //     // e.stopPropagation()
+//     //     // e.stopImmediatePropagation();
+//     // });
+// })
 
 document.addEventListener ('keydown', input.listener, {passive: false});
 document.addEventListener ('keyup', input.listener, {passive: false});

@@ -6,6 +6,7 @@ class Scenario {
         this.segL  = segL;
         this.limit = limit;
         this.pos   = 1;
+        this.vel   = 32;
     }
 
     drawQwad (ctx, color, x1, y1, w1, x2, y2, w2) {
@@ -19,7 +20,7 @@ class Scenario {
         ctx.fill ();
     }
 
-    update (canvas, cam) {
+    update (canvas, cam, player) {
         let ctx = canvas.getContext ('2d');
 
         let grass = ['#696' , '#8b8']
@@ -31,15 +32,22 @@ class Scenario {
 
         let start = parseInt (this.pos / this.segL) +1;
         // console.log (start);
+        let x = 0;
+        let dx = 0;
 
         let bottomLimit = canvas.height;
         for (let i = start; i < start + this.limit; i++) {
             let line = this.lines[i % this.total];
             let prev = this.lines[(i-1) % this.total];
 
+            cam.X = player.X - x;
+            cam.Y = player.Y ;
             cam.Z = parseInt (this.pos - (i >= this.total ? this.total * this.segL : 0))
 
-            line.project (cam,this.width);
+            line.project (cam,this.width, canvas);
+
+            x += dx;
+            dx += line.curve;
 
             let currentBottom = prev.Y;
             if (currentBottom > bottomLimit || prev.Y < 0 || line.scale < 0) {
@@ -65,14 +73,21 @@ class Scenario {
                 // }
 
                 cam.Z = parseInt (this.pos - (i >= this.total ? this.total * this.segL : 0))
+                
+                let x = 0;
+                let dx = 0;
 
-                this.lines[i % this.total].sprite.forEach (sprite => {
-                    sprite.project (cam)
-                    sprite.draw (ctx)
-                });
+                this.lines[i % this.total].drawSprite (ctx, this.width)
+                // this.lines[i % this.total].sprite.forEach (sprite => {
+                //     sprite.x = x
+                //     sprite.project (cam)
+                //     x += dx;
+                //     dx += this.lines[i % this.total].curve;
+                //     // sprite.draw (ctx)
+                // });
             }
         }
 
-        this.pos+=32;
+        this.pos+=this.vel;
     }
 }

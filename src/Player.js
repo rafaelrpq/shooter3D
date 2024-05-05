@@ -3,6 +3,10 @@ class Player {
         this.width  = 80;
         this.height = 56;
 
+        this.X = 0;
+        this.Y = 0;
+        this.Z = 0;
+
         this.pos = {
             x : canvas.width/2 - this.width/2,
             y : 90 + canvas.height/2 - this.height/2,

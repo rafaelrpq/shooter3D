@@ -6,6 +6,12 @@ canvas.height = window.innerHeight;
 
 ctx.imageSmoothingEnabled = false;
 
+document.addEventListener ('contextmenu', e => {
+    e.preventDefault ();
+    e.stopPropagation()
+    e.stopImmediatePropagation();
+}, {'passive' : false});
+
 let height = 1536;
 const cam = {
     X : 0,
@@ -16,41 +22,56 @@ const cam = {
 
 const effect = new Audio ('');
 
-const scene = new Scenario ({});
+const scene = new Scenario ({total: 256});
 
 for (let i=0; i < scene.total; i++) {
     let line = new Line ();
-    line.z = i * 256;
-
-    if (i%8 === 0) {
-        let obj = new Object3D ({
-            pos : {
-                x: Math.random () * scene.width * 2  - scene.width,
-                y: 8 * 220,
-                z: i * 256,
-            },
-            width : 120,
-            height: 220,
-
-            imgSrc: 'res/sprites/pedra2.png'
-
-        })
-
-        line.sprite.push (obj)
+    line.z = i * scene.segL;
+    if (i > 80 && i < 100) {
+        line.curve = 24;
     }
 
-    line.sprite.push (
-        new Object3D ({
-            pos : {
-                x: Math.random () * 8192 * 12 - 8192 * 4,
-                y: Math.random () * 8192 * 2 + 2048,
-                z: (i+scene.limit) * 256,
-            },
-            width : 16,
-            height: 16,
-            color : `white`,
-        })
-    )
+    if (i > 150 && i < 180) {
+        line.curve = -24;
+    }
+
+
+
+    if (i%8 === 0) {
+        let sprite = new Image ()
+        sprite.src = 'res/sprites/pedra2.png'
+        line.sprite = sprite;
+        line.spriteX = 11;
+    }
+    //     let obj = new Object3D ({
+    //         pos : {
+    //             // x: Math.random () * scene.width * 2  - scene.width,
+    //             x: scene.width,
+    //             y: 8 * 220,
+    //             z: i * 256,
+    //         },
+    //         width : 120,
+    //         height: 220,
+
+    //         imgSrc: 'res/sprites/pedra2.png'
+
+    //     })
+
+    //     line.sprite.push (obj)
+    // }
+
+    // line.sprite.push (
+    //     new Object3D ({
+    //         pos : {
+    //             x: Math.random () * 8192 * 12 - 8192 * 4,
+    //             y: Math.random () * 8192 * 2 + 2048,
+    //             z: (i+scene.limit) * 256,
+    //         },
+    //         width : 16,
+    //         height: 16,
+    //         color : `white`,
+    //     })
+    // )
 
     scene.lines.push (line);
 }
@@ -83,43 +104,43 @@ input.handler = function () {
     };
 
     if (input.key.UP) {
-        cam.Y = (cam.Y < limits.TOP) ? cam.Y + vel : limits.TOP;
+        player.Y = (player.Y < limits.TOP) ? player.Y + vel : limits.TOP;
     } else if (input.key.DOWN) {
-        cam.Y = (cam.Y > limits.BOTTOM) ? cam.Y - vel : limits.BOTTOM;
+        player.Y = (player.Y > limits.BOTTOM) ? player.Y - vel : limits.BOTTOM;
     } else {
-        cam.Y+=0;
+        player.Y+=0;
     }
 
     if (input.key.LEFT) {
-        cam.X = (cam.X > limits.LEFT) ? cam.X - vel : limits.LEFT;
+        player.X = (player.X > limits.LEFT) ? player.X - vel : limits.LEFT;
     } else if (input.key.RIGHT) {
-        cam.X = (cam.X < limits.RIGHT) ? cam.X + vel : limits.RIGHT;
+        player.X = (player.X < limits.RIGHT) ? player.X + vel : limits.RIGHT;
     } else {
-        cam.X+=0;
+        player.X+=0;
     }
 
-    if (cam.Y < limits.TOP){
-        cam.Y += 32 * input.axis.y;
+    if (player.Y < limits.TOP){
+        player.Y += 32 * input.axis.y;
     } else {
-        cam.Y = limits.TOP
+        player.Y = limits.TOP
     }
 
-    if (cam.Y > limits.BOTTOM){
-        cam.Y +=  32 * input.axis.y;
+    if (player.Y > limits.BOTTOM){
+        player.Y +=  32 * input.axis.y;
     } else {
-        cam.Y = limits.BOTTOM
+        player.Y = limits.BOTTOM
     }
 
-    if (cam.X < limits.RIGHT){
-        cam.X +=  32 * input.axis.x;
+    if (player.X < limits.RIGHT){
+        player.X +=  32 * input.axis.x;
     } else {
-        cam.X = limits.RIGHT
+        player.X = limits.RIGHT
     }
 
-    if (cam.X > limits.LEFT){
-        cam.X +=  32 * input.axis.x;
+    if (player.X > limits.LEFT){
+        player.X +=  32 * input.axis.x;
     } else {
-        cam.X = limits.LEFT
+        player.X = limits.LEFT
     }
 
 
@@ -153,6 +174,12 @@ input.handler = function () {
     if (input.button.D) {
         game.debug = !game.debug;
         input.button.D = false;
+    }
+    
+    if (input.button.X) {
+        scene.vel = 64;
+    } else {
+        scene.vel = 32
     }
 
 }
@@ -242,21 +269,21 @@ function render () {
     ctx.fillRect(0,0, canvas.width, canvas.height);
 
     input.handler ();
-    scene.update (canvas, cam);
+    scene.update (canvas, cam, player);
 
     shots.update (scene, cam, ctx);
 
     ctx.drawImage (mira, canvas.width/2 - mira.width / 2, canvas.height/2 - mira.height / 2, mira.width, mira.height);
 
-    ctx.save ();
-    if (cam.Y <= 800) {
-        ctx.shadowColor = 'rgba(0,0,0,0.4)';
-        ctx.shadowBlur = (cam.Y - 535) / 15;
-        ctx.shadowOffsetX = cam.X / 50;
-        ctx.shadowOffsetY = cam.Y - 535 ;
-    }
+    // ctx.save ();
+    // if (cam.Y <= 800) {
+    //     ctx.shadowColor = 'rgba(0,0,0,0.4)';
+    //     ctx.shadowBlur = (cam.Y - 535) / 15;
+    //     ctx.shadowOffsetX = cam.X / 50;
+    //     ctx.shadowOffsetY = cam.Y - 535 ;
+    // }
+    // ctx.restore ();
     player.draw (input.axis);
-    ctx.restore ();
 
     if (game.debug)  debug ();
 }
