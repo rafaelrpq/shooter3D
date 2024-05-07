@@ -6,7 +6,7 @@ class Scenario {
         this.segL  = segL;
         this.limit = limit;
         this.pos   = 1;
-        this.vel   = 32;
+        this.vel   = 96;
     }
 
     drawQwad (ctx, color, x1, y1, w1, x2, y2, w2) {
@@ -24,8 +24,8 @@ class Scenario {
         let ctx = canvas.getContext ('2d');
 
         let grass = ['#696' , '#8b8']
-        let road =  ['#8b8' ,  '#696'];
-        // let road =  ['#666' ,  '#707070'];
+        // let road =  ['#8b8' ,  '#696'];
+        let road =  ['#666' ,  '#707070'];
 
         while (this.pos >= this.total * 256 ) this.pos -= this.total * this.segL ;
         while (this.pos <= 0) this.pos += this.total * this.segL;
@@ -40,8 +40,8 @@ class Scenario {
             let line = this.lines[i % this.total];
             let prev = this.lines[(i-1) % this.total];
 
-            cam.X = player.X - x;
-            cam.Y = player.Y ;
+            cam.X = parseInt (player.X - x);
+            cam.Y = parseInt (player.Y) ;
             cam.Z = parseInt (this.pos - (i >= this.total ? this.total * this.segL : 0))
 
             line.project (cam,this.width, canvas);
@@ -64,16 +64,16 @@ class Scenario {
         bottomLimit = canvas.height;
         for (let i = start + this.limit; i > start; i--) {
 
-            if (this.lines[i % this.total].sprite) {
+            // if (this.lines[i % this.total].sprite) {
                 let currentBottom = this.lines[i%this.total].Y;
 
-                // if (currentBottom > bottomLimit || this.lines[(i-1)%this.total].Y < 0 || this.lines[i%this.total].scale < 0) {
-                //     bottomLimit = currentBottom;
-                //     continue;
-                // }
+                if (currentBottom > bottomLimit || this.lines[(i-1)%this.total].Y < 0 || this.lines[i%this.total].scale < 0) {
+                    bottomLimit = currentBottom;
+                    continue;
+                }
 
                 cam.Z = parseInt (this.pos - (i >= this.total ? this.total * this.segL : 0))
-                
+
                 let x = 0;
                 let dx = 0;
 
@@ -85,7 +85,7 @@ class Scenario {
                 //     dx += this.lines[i % this.total].curve;
                 //     // sprite.draw (ctx)
                 // });
-            }
+            // }
         }
 
         this.pos+=this.vel;

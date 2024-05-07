@@ -9,7 +9,7 @@ class Line {
 
         this.spriteX = 0;
 
-        this.sprite = null;
+        this.spriteList = [];
     }
 
     project (cam, width, canvas) {
@@ -20,18 +20,15 @@ class Line {
     }
 
     drawSprite (ctx, width) {
-        if (this.sprite === null) {
+        if (this.spriteList.length === 0) {
+            // console.log ('sem sprite')
             return ;
         }
 
-        let destX = this.X + this.scale * this.spriteX * width/2;
-        let destY = this.Y + 4;
-        let destW  = this.sprite.width * this.W / 266;
-        let destH  = this.sprite.height * this.W / 266;
-
-        destX += destW * this.spriteX; //offsetX
-        destY += destH * (-1);    //offsetY
-
-        ctx.drawImage (this.sprite, destX, destY, destW, destH)
+        this.spriteList.forEach (sprite => {
+            sprite.project (this, width);
+            sprite.draw (ctx);
+            // console.log ('sprite desenhado') 
+        });
     }
 }

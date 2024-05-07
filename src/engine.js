@@ -12,7 +12,7 @@ document.addEventListener ('contextmenu', e => {
     e.stopImmediatePropagation();
 }, {'passive' : false});
 
-let height = 1536;
+let height = 1832;
 const cam = {
     X : 0,
     Y : height,
@@ -35,13 +35,17 @@ for (let i=0; i < scene.total; i++) {
         line.curve = -24;
     }
 
+    // line.y = Math.sin (i/20) * 1300;
 
+    if (i%4 === 0) {
+        // let sprite = new Image ()
+        // sprite.src = 'res/sprites/pedra2.png'
+        // line.sprite = sprite;
+        // line.spriteX = 11;
 
-    if (i%8 === 0) {
-        let sprite = new Image ()
-        sprite.src = 'res/sprites/pedra2.png'
-        line.sprite = sprite;
-        line.spriteX = 11;
+        line.spriteList.push (new LineSprite ({pos: {x : 6}, imgSrc: 'res/sprites/pedra.png'}));
+        line.spriteList.push (new LineSprite ({pos: {x : -7}, imgSrc: 'res/sprites/pedra.png'}));
+        line.spriteList.push (new LineSprite ({pos: {x : -0.5}, imgSrc: 'res/sprites/pedra2.png'}));
     }
     //     let obj = new Object3D ({
     //         pos : {
@@ -175,11 +179,11 @@ input.handler = function () {
         game.debug = !game.debug;
         input.button.D = false;
     }
-    
+
     if (input.button.X) {
-        scene.vel = 64;
+        scene.vel = 128;
     } else {
-        scene.vel = 32
+        scene.vel = 96
     }
 
 }
@@ -254,7 +258,7 @@ const game = {
     debug   : false,
 }
 
-const player = new Player (canvas);
+const player = new Player ({height, canvas});
 
 function render () {
     game.frame = requestAnimationFrame (render);

@@ -1,10 +1,10 @@
 class Player {
-    constructor (canvas) {
+    constructor ({height, canvas}) {
         this.width  = 80;
         this.height = 56;
 
         this.X = 0;
-        this.Y = 0;
+        this.Y = height;
         this.Z = 0;
 
         this.pos = {
