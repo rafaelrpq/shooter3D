@@ -1,4 +1,4 @@
-var DYNAMIC_CACHE = 'v20240506-1';
+var DYNAMIC_CACHE = 'v20240507';
 var urlsToCache = [
     'index.html',
 
@@ -11,6 +11,8 @@ var urlsToCache = [
     'src/input.js',
     'src/Object3D.js',
     'src/Player.js',
+    'src/Line.js',
+    'src/LineSprite.js',
     'src/Scenario.js',
     'src/app/appManager.js',
 
